@@ -3,15 +3,23 @@ package leo.codepath.flickster.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//  THIS CLASS IS THE DATA COLLECTOR, IT CONNECTS TO THE SOURCE
+
+
+@Parcel
 public class Movie {
     String posterPath;
     String title;
     String overview;
     String backdropPath;
+    int movieID;
+    String movieRating;
+
 
 //make this constructor throw an exception so that whoever calls this will have to deal with it
     public Movie(JSONObject jsonObject) throws JSONException {
@@ -19,7 +27,15 @@ public class Movie {
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
         backdropPath = jsonObject.getString("backdrop_path");
+        movieID = jsonObject.getInt("id");
+        movieRating = jsonObject.getString("vote_average");
 
+
+
+    }
+
+    //empty constructor is needed by the parceler Library
+    public Movie() {
     }
 
     //it takes a json array
@@ -39,10 +55,14 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        //%s means that whatever we put in as the second elemtn of the formatter will take its place
+        //%s means that whatever we put in as the second element of the formatter will take its place
         //perfect for the URL
         return String.format("https://image.tmdb.org/t/p/w342/%s",posterPath);
     }
+
+    public String getMovieRating() { return movieRating; }
+
+    public int getMovieID() { return movieID; }
 
     public String getTitle() {
         return title;
@@ -52,3 +72,5 @@ public class Movie {
         return overview;
     }
 }
+
+
